@@ -1,12 +1,18 @@
-import React, { Fragment, memo } from 'react';
+import React, { Fragment, memo, useState} from 'react';
 
-export const PageSize = memo({availableSizes, onChange}) => {
+export const PageSize = memo(({availableSizes, onChange}) => {
+  const [selectedSize, setSelectedSize] = useState()
   return <>
     <span>items per page</span>
     {availableSizes.map( (size, idx) => <Fragment key={size}>
         { !!idx && ' | '}
-        <span onClick={() => onChange(size)}>{ size }</span>
+        <span onClick={()=> {
+          if(selectedSize !== size){
+            onChange(size)
+            setSelectedSize(size)
+          }
+        }}>{ size }</span>
       </Fragment>
     )}
   </>
-}
+})
