@@ -1,5 +1,9 @@
 import React from 'react';
 import './App.css';
+import {EmployeeList} from './components/employees/EmployeeList'
+
+import {getEmployees} from './data'
+const employees = getEmployees().slice(0, 25)
 
 const calculateData = (all = true) => {
   let data = []
@@ -18,6 +22,7 @@ function App({ all = true}) {
   return (
     <div className="App">
       elo: {sum1} {sum2}
+      <EmployeeList employees={employees}/>
     </div>
   );
 }

@@ -1,0 +1,25 @@
+.pagination {
+  margin: 14px;
+}
+
+.dots {
+  padding: 3px;
+}
+
+.page {
+  cursor: pointer;
+  background-color: #eee;
+  padding: 3px;
+  margin: 2px;
+  border: 1px solid #333;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.page:hover {
+  background-color: #fff;
+}
+
+.page-actual {
+  font-weight: bold;
+  background-color: #fff;
+}
