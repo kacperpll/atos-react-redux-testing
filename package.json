@@ -32,7 +32,7 @@
     "coverageThreshold": {
       "global":{
         "functions": 80,
-        "branches": 80
+        "branches": 50
       }
     }
   }

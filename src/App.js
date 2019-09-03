@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 const calculateData = (all = true) => {
-  const data = []
+  let data = []
   for (var i =0; i < 100; i++){
     data.push( Math.random() )
   }
@@ -13,7 +13,7 @@ const calculateData = (all = true) => {
 }
 
 function App({ all = true}) {
-  const sum = calculateData()
+  const sum = calculateData(all)
   return (
     <div className="App">
       elo: {sum}
