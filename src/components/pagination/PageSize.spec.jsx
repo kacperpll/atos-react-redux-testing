@@ -48,14 +48,15 @@ describe('PageSize', () => {
     const spy = jest.fn()
     const sizes = [10, 25, 50]
     const wrapper = mount(<PageSize
-        availableSizes={sizes}
-        onChange={spy} />)
+      availableSizes={sizes}
+      onChange={spy} />)
 
 
-      getBtnByLabel(wrapper, '25').simulate('click')
+    getBtnByLabel(wrapper, '25').simulate('click')
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenLastCalledWith(25)
+
 
     getBtnByLabel(wrapper, '10').simulate('click')
 
@@ -66,6 +67,26 @@ describe('PageSize', () => {
 
     expect(spy).toHaveBeenCalledTimes(2)
   })
+
+  it('should have initial size defined', () => {
+    const spy = jest.fn()
+    const sizes = [10, 25, 50]
+    const wrapper = shallow(<PageSize
+      availableSizes={sizes}
+      initialSize={25}/>)
+
+    expect(wrapper.find('.selected').text()).toContain('25')
+
+  });
+  it('should have default size defined', () => {
+    const spy = jest.fn()
+    const sizes = [10, 25, 50]
+    const wrapper = shallow(<PageSize
+      availableSizes={sizes} />)
+
+    expect(wrapper.find('.selected').text()).toContain('10')
+
+  });
 
   // it('should invoke callback only if new size is different than old one', () => {
   //   const spy = jest.fn()
