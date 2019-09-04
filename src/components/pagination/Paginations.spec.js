@@ -193,6 +193,12 @@ describe('Pagination', () => {
           const getBtnByLabel = (wrapper, label) => wrapper.find('.page')
             .filterWhere(node => node.text().trim() ===label)
         
+            enabled.forEach(label =>{
+              const btn = getBtnByLabel(wrapper, label)
+              expect(btn).toHaveLength(1)
+              expect(btn.prop('disabled')).not.toBeTruthy()
+            })
+
             disabled.forEach(label =>{
               const btn = getBtnByLabel(wrapper, label)
               expect(btn).toHaveLength(1)
