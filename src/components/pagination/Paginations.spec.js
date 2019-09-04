@@ -102,34 +102,42 @@ describe('Pagination', () => {
   describe('Proper pages', () => {
     
     [{
+      displayArrows: false,
       currentPage: 1, pageCount: 15, expectedDisplayed: ['1', '2', '3']
     },
      {
+      displayArrows: false,
       currentPage: 2, pageCount: 15, expectedDisplayed: ['1', '2', '3', '4']
     }
     , {
+      displayArrows: false,
       currentPage: 3, pageCount: 15, expectedDisplayed: ['1', '2', '3', '4', '5']
     }, {
+      displayArrows: false,
       currentPage: 15, pageCount: 15, expectedDisplayed: ['13', '14', '15']
     }, {
+      displayArrows: false,
       currentPage: 14, pageCount: 15, expectedDisplayed: ['12', '13', '14', '15']
     },
      {
+      displayArrows: false,
       currentPage: 13, pageCount: 15, expectedDisplayed: ['11', '12', '13', '14', '15']
     }
-  ].forEach(({ currentPage, pageCount, expectedDisplayed}) => {
+  ].forEach(({ currentPage, pageCount, expectedDisplayed, displayArrows}) => {
         it(
           `given: current = ${currentPage}, pages = ${pageCount}
            then: should display ${expectedDisplayed}`, () => {
           const wrapper = shallow(<Pagination
             currentPage={currentPage}
-            pageCount={pageCount} />)
+            pageCount={pageCount}
+            displayArrows={displayArrows} />)
 
             // console.log(getButtonLabels(wrapper))
 
             expect(getButtonLabels(wrapper)).toEqual(expectedDisplayed)
         });
     })
+
     describe('Current page', () => {
       it(
         `
@@ -144,10 +152,53 @@ describe('Pagination', () => {
             expect(wrapper.find('.page').at(0).hasClass('selected')).toBeTruthy()
             expect(wrapper.find('.selected').text()).toContain('1')
             expect(wrapper.find('.selected')).toHaveLength(1)
-            
+        });
+    });
 
 
-      });
     });
-    });
+    describe('Disabled Buttons', () => {
+      // current page always disabled
+      [{
+        id: 'D.1',
+        currentPage: 1, pageCount: 15,
+        enabled: ['>>', '>'],
+        disabled: ['<<', '<']
+      },{
+        id: 'D.2',
+        currentPage: 2, pageCount: 15,
+        enabled: ['>>', '>', '<<', '<'],
+        disabled: []
+      },
+      {
+        id: 'D.3',
+        currentPage: 14, pageCount: 15,
+        enabled: ['>>', '>', '<<', '<'],
+        disabled: []
+      },{
+        id: 'D.4',
+        currentPage: 15, pageCount: 15,
+        enabled: ['<<', '<'],
+        disabled: ['>>', '>']
+      }].forEach(({ id, currentPage, pageCount, enabled, disabled }) => {
+        it(`
+        TEST ${id}
+        given: current ${currentPage}, pages = ${pageCount}
+        then: ${enabled} should be enabled, ${disabled} should be disabled`, () => {
+          const wrapper = shallow(<Pagination
+            currentPage={currentPage}
+            pageCount={pageCount}
+            displayArrows={true} />)
+
+          const getBtnByLabel = (wrapper, label) => wrapper.find('.page')
+            .filterWhere(node => node.text().trim() ===label)
+        
+            disabled.forEach(label =>{
+              const btn = getBtnByLabel(wrapper, label)
+              expect(btn).toHaveLength(1)
+              expect(btn.prop('disabled')).toBeTruthy()
+            })  
+        })
+      })
+    })
 })
