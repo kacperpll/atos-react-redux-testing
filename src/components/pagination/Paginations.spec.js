@@ -18,6 +18,9 @@ import { Pagination } from './Pagination'
 const getBtnByLabel = (wrapper, label) => wrapper.find('.page')
           .filterWhere(node => node.text().trim() === label)
 
+          const getButtonLabels = wrapper => wrapper
+          .find('.page').map(w => w.text())
+
 describe('Pagination', () => {
 
   const getBtnByLabel = (wrapper, label) => wrapper.find('.page')
@@ -213,4 +216,36 @@ describe('Pagination', () => {
       });
     });
   })
+
+  describe('Switching Pages', () => {
+    it('should change selected page after clicking page button', () => {
+      let wrapper
+
+      let currentPage = 13
+      const parent__setCurrentPage = (page) => {
+        currentPage = page
+        wrapper.setProps({ currentPage })
+      }
+
+      wrapper = mount(<Pagination
+        currentPage={13}
+        pageCount={15}
+        displayArrows={false}
+        onChange={parent__setCurrentPage} />)
+
+      expect(wrapper.find('.selected').text()).toContain('13')
+      expect(getButtonLabels(wrapper))
+        .toEqual(['11', '12', '13', '14', '15'])
+
+      // we're mocking parent behavior
+      const btn = getBtnByLabel(wrapper, '14')
+      btn.simulate('click')
+      // wrapper.setProps({ currentPage: 14 })
+
+    
+      expect(wrapper.find('.selected').text()).toContain('14')
+      expect(getButtonLabels(wrapper))
+        .toEqual(['12', '13', '14', '15'])
+    })
+  });
 })
