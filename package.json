@@ -34,15 +34,15 @@
     ]
   },
   "jest": {
-    "collectCoverageFrom": [
-      "src/App.js",
-      "src/components/**/*.js",
-      "!src/components/**/*.test.js"
+    "coveragePathIgnorePatterns": [
+      "src/index.js",
+      "src/serviceWorker.js",
+      "src/data"
     ],
     "coverageThreshold": {
       "global": {
         "functions": 80,
-        "branches": 50
+        "branches": 80
       }
     }
   }
